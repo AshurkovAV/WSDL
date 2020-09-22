@@ -16,20 +16,20 @@ namespace WSDLTest
         {
             //Метод предназначен для тестирования работоспособности сервиса МО
             //MOHealthCheks();
-            ProductCode code = new ProductCode();
-            code.Code = "GD000449";
-            code.Qualifier = "GenericDrug";
-            code.Text = "Amoxycillini, капсулы, 500 мг";
+            //DrugProductCodeWithText code = new DrugProductCodeWithText();
+            //code.Code = "GD000449";
+            //code.Qualifier = "GenericDrug";
+            //code.Text = "Amoxycillini, капсулы, 500 мг";
 
-            var medication = new List<RxMedication>();
-            medication.Add(new RxMedication
-            {
-                DrugCoded = new DrugCoded
-                {
-                    Items = new object[] { code }
-                },
-            });
-            medication.ToArray();
+            //var medication = new List<RxMedication>();
+            //medication.Add(new RxMedication
+            //{
+            //    DrugCoded = new DrugCoded
+            //    {
+            //        Items = new object[] { code }
+            //    },
+            //});
+            //medication.ToArray();
             //А в методе CancelRxTest проблема с обращением к DrugCoded
             CancelRxTest();
         }
@@ -50,7 +50,7 @@ namespace WSDLTest
                     Licence = new ServiceReference2.Licence()
                     {
                         LicenceNumber = "ЛО-31-01-001270",
-                        LicenceStartDate = DateTime.Parse("2019-02-08"),
+                        LicenceStartDate = DateTime.Parse("20.12.2019"),
                         LicenceAdministrator = "Бюджетное учреждение"
                     },
                     Address = new ServiceReference2.AddressType
@@ -133,10 +133,10 @@ namespace WSDLTest
                         {
                             Items = new object[]
                             {
-                                new ProductCode
+                                new DrugProductCodeWithText()
                                 {
                                     Code ="GD000449",
-                                    Qualifier = "GenericDrug",
+                                    Qualifier = AllergyDrugProductCodedQualifier.GenericDrug,
                                     Text = "Amoxycillini, капсулы, 500 мг"
                                 }
                             }
@@ -261,11 +261,120 @@ namespace WSDLTest
         }
     }
 
-    public class ProductCode
+    //public class DrugProductCodeWithText
+    //{ 
+    //    public string Code { get; set; }
+    //    public string Qualifier { get; set; }
+    //    public string Text { get; set; }
+    //}
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://medicata.ru/schemas/v2/medicata")]
+    public partial class DrugProductCodeWithText : object, System.ComponentModel.INotifyPropertyChanged
     {
-        public string Code { get; set; }
-        public string Qualifier { get; set; }
-        public string Text { get; set; }
+
+        private string codeField;
+
+        private AllergyDrugProductCodedQualifier qualifierField;
+
+        private string textField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        public string Code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+                this.RaisePropertyChanged("Code");
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        public AllergyDrugProductCodedQualifier Qualifier
+        {
+            get
+            {
+                return this.qualifierField;
+            }
+            set
+            {
+                this.qualifierField = value;
+                this.RaisePropertyChanged("Qualifier");
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public string Text
+        {
+            get
+            {
+                return this.textField;
+            }
+            set
+            {
+                this.textField = value;
+                this.RaisePropertyChanged("Text");
+            }
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null))
+            {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://medicata.ru/schemas/v2/medicata")]
+    public partial class DrugCoded : object, System.ComponentModel.INotifyPropertyChanged
+    {
+
+        private object[] itemsField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("CompositeProductCode", typeof(DrugProductCodeWithDoseText), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("IndividualManufactured", typeof(BooleanCode), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ProductClarifyingFreeText", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ProductCode", typeof(DrugProductCodeWithText), Order = 0)]
+        public object[] Items
+        {
+            get
+            {
+                return this.itemsField;
+            }
+            set
+            {
+                this.itemsField = value;
+                this.RaisePropertyChanged("Items");
+            }
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null))
+            {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }
 

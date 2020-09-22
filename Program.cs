@@ -30,7 +30,6 @@ namespace WSDLTest
                 },
             });
             medication.ToArray();
-            //PrescribedMedication = medication.ToArray()
             //А в методе CancelRxTest проблема с обращением к DrugCoded
             CancelRxTest();
         }

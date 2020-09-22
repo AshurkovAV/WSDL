@@ -19,3 +19,12 @@ E:\Срочно\WSDLTest-master\WSDLTest-master\WSDL\obj\Debug\WSDLTest.csprojAs
 E:\Срочно\WSDLTest-master\WSDLTest-master\WSDL\obj\Debug\WSDLTest.csproj.CoreCompileInputs.cache
 E:\Срочно\WSDLTest-master\WSDLTest-master\WSDL\obj\Debug\WSDLTest.exe
 E:\Срочно\WSDLTest-master\WSDLTest-master\WSDL\obj\Debug\WSDLTest.pdb
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\bin\Debug\WSDLTest.exe.config
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\obj\Debug\WSDLTest.exe
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\obj\Debug\WSDLTest.pdb
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\bin\Debug\WSDLTest.exe
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\bin\Debug\WSDLTest.pdb
+C:\Users\Алексей\Source\Repos\byGishima\WSDL\obj\Debug\WSDLTest.csprojResolveAssemblyReference.cache
+C:\Users\Алексей\Source\Repos\AshurkovAV\WSDL\bin\Debug\WSDLTest.exe.config
+C:\Users\Алексей\Source\Repos\AshurkovAV\WSDL\obj\Debug\WSDLTest.exe
+C:\Users\Алексей\Source\Repos\AshurkovAV\WSDL\obj\Debug\WSDLTest.pdb

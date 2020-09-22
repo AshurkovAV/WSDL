@@ -1,0 +1,3983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:sch1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://medicata.ru/schemas/v2/medicata" xmlns:sch0="http://medicata.ru/schemas/v2/medicata" targetNamespace="http://medicata.ru/schemas/v2/medicata" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema xmlns="http://medicata.ru/schemas/v2/medicata" xmlns:ns0="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://medicata.ru/schemas/v2/medicata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" />
+      <xs:element name="NewRxRequest">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Запрос на создание назначений</xs:documentation>
+          </xs:annotation>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMORequest">
+              <xs:sequence>
+                <xs:element name="ReferenceNumber" type="sch0:an1..50">
+                  <xs:annotation>
+                    <xs:documentation>GUID схемы назначений</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Patient" type="sch0:PatientForMO" />
+                <xs:element minOccurs="0" name="PersonalRepresentative" type="sch0:PersonalRepresentative" />
+                <xs:element name="Prescriber" type="sch0:HistoryPrescriber">
+                  <xs:annotation>
+                    <xs:documentation>Медицинский работник</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="AllergyOrAdverseEvent" type="sch0:AllergyChoice">
+                  <xs:annotation>
+                    <xs:documentation>Перечень аллергий</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Diagnosis" type="sch0:Diagnosis">
+                  <xs:annotation>
+                    <xs:documentation>Диагнозы</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="WrittenDate" type="sch0:UtcDateType">
+                  <xs:annotation>
+                    <xs:documentation>Дата формирования схемы назначений</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="PrescribedMedication" type="sch0:PrescribedMedicationForNewRx">
+                  <xs:annotation>
+                    <xs:documentation>Схема медикаментозного лечения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="MedicalDevices">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="MedicalDevice" type="sch0:MedicalDevice" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewRxResponse">
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMedicationMOResponse" />
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CancelRxRequest">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Запрос на отмену назначения</xs:documentation>
+          </xs:annotation>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMORequest">
+              <xs:sequence>
+                <xs:element name="Prescriber" type="sch0:HistoryPrescriber" />
+                <xs:element name="PrescribedMedication" type="sch0:PrescribedMedicationCancelFromMO" />
+                <xs:element minOccurs="0" name="WrittenDate" type="sch0:UtcDateType">
+                  <xs:annotation>
+                    <xs:documentation>Дата отмены назначения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="ChangeReasonText" type="sch0:an1..260">
+                  <xs:annotation>
+                    <xs:documentation>Причина отмены назначений/рецептов</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CancelRxResponse">
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMedicationMOResponse" />
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RxHistoryRequest">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Запрос сведений по пациенту</xs:documentation>
+          </xs:annotation>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMORequest">
+              <xs:sequence>
+                <xs:element minOccurs="0" name="ReferenceNumber" type="sch0:an1..50">
+                  <xs:annotation>
+                    <xs:documentation>GUID схемы назначений</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="MedicationIdentification" type="sch0:an1..50">
+                  <xs:annotation>
+                    <xs:documentation>GUID назначения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="Patient" type="sch0:PatientForMO" />
+                <xs:element minOccurs="0" name="Prescriber" type="sch0:HistoryPrescriber" />
+                <xs:element minOccurs="0" name="ActiveMedicationFlag" type="sch0:BooleanCode">
+                  <xs:annotation>
+                    <xs:documentation>Признак - только активные
+                                    назначения
+                                </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="RequestedDates" type="sch0:DateRange">
+                  <xs:annotation>
+                    <xs:documentation>Временной диапозон поиска</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RxHistoryResponse">
+        <xs:annotation>
+          <xs:documentation>Результат запроса сведений по пациенту</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Результат запроса сведений по пациенту</xs:documentation>
+          </xs:annotation>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataBaseResponse">
+              <xs:sequence minOccurs="0">
+                <xs:element minOccurs="0" name="PrescribedMedicationsHistory" type="sch0:PrescribedMedicationsHistory">
+                  <xs:annotation>
+                    <xs:documentation>Множество запрошенных схем назначений</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MOHealthCheckRequest">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Проверка работоспособности сервиса МО</xs:documentation>
+          </xs:annotation>
+          <xs:complexContent mixed="false">
+            <xs:extension base="sch0:MedicataMORequest" />
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MOHealthCheckResponse">
+        <xs:annotation>
+          <xs:documentation>Ответ на тест работоспособности сервиса МО</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:restriction base="sch0:MedicataBaseResponse">
+              <xs:sequence>
+                <xs:element name="RequestNumber" type="sch0:an1..50">
+                  <xs:annotation>
+                    <xs:documentation>Номер обращения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="RequestStatus" type="sch0:n1..1">
+                  <xs:annotation>
+                    <xs:documentation>Статус обработки сообщения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="RequestMessage" type="sch0:an1..1000">
+                  <xs:annotation>
+                    <xs:documentation>Ответ по результатам обработки сообщения</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:restriction>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="MedicataMORequest" abstract="true">
+        <xs:annotation>
+          <xs:documentation>Тип = Запрос от МО</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="PracticeLocation" type="sch0:PracticeLocationType">
+            <xs:annotation>
+              <xs:documentation>Данные МО или ИП (частнопрактикующий
+                                    врач)
+                                </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SoftwareInformation" type="sch0:SoftwareInformationType">
+            <xs:annotation>
+              <xs:documentation>Данные о взаимодействующем программном обеспечении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MedicataAORequest" abstract="true">
+        <xs:annotation>
+          <xs:documentation>Тип = запрос от Аптеки</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Pharmacy" type="sch0:Pharmacy">
+            <xs:annotation>
+              <xs:documentation>Информация об аптеке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SoftwareInformation" type="sch0:SoftwareInformationType">
+            <xs:annotation>
+              <xs:documentation>Данные о взаимодействующем программном обеспечении</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SoftwareInformationType">
+        <xs:annotation>
+          <xs:documentation>Тип = Данные о взаимодействующем программном обеспечении</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Name" type="sch0:an1..210">
+            <xs:annotation>
+              <xs:documentation>Наименование программного обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Version" type="sch0:an1..19">
+            <xs:annotation>
+              <xs:documentation>Версия программного обеспечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Comment" type="sch0:an1..254">
+            <xs:annotation>
+              <xs:documentation>Дополнительный комментарий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MedicataBaseResponse" abstract="true">
+        <xs:annotation>
+          <xs:documentation>Тип = Ответ сервиса - Базовая часть</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="RequestNumber" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>Номер обращения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReferenceNumber" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID схемы назначений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestStatus" type="sch0:n1..1">
+            <xs:annotation>
+              <xs:documentation>Статус обработки сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RequestMessage" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Ответ по результатам обработки сообщения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MedicataMedicationMOResponse" abstract="true">
+        <xs:annotation>
+          <xs:documentation>Тип = Результат обработки сообщения с назначениями ЛП и рецептами ЛП от МО</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:MedicataBaseResponse">
+            <xs:sequence>
+              <xs:element name="PrescribedMedicationResults" type="sch0:PrescribedMedicationResultForMO">
+                <xs:annotation>
+                  <xs:documentation>Результаты обработки назначений и рецептов</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="MedicataMedicationPharmacyResponse" abstract="true">
+        <xs:annotation>
+          <xs:documentation>Тип = Результат обработки:
+- факта отпуска ЛП аптекой по назначениям ЛП
+- факта взятия на отложенное обслуживание набора назначений ЛП
+- факта отмены набора назначений ЛП фармацевтом</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:MedicataBaseResponse">
+            <xs:sequence>
+              <xs:element name="PrescribedMedicationResults" type="sch0:PrescribedMedicationResultForPharmacy">
+                <xs:annotation>
+                  <xs:documentation>Результаты обработки назначений и рецептов</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AbstractError">
+        <xs:annotation>
+          <xs:documentation>Ошибка</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Text" type="sch0:an" />
+          <xs:element minOccurs="0" name="Code" type="sch0:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MedicataBaseRequest" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ReferenceNumber" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID схемы назначений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationForNewRx">
+        <xs:annotation>
+          <xs:documentation>Тип = Схема назначений ЛП для использования в NewRx</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:PrescribedMedication" />
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationResultForPharmacy">
+        <xs:annotation>
+          <xs:documentation>Тип = результат обработки запроса от Аптеки</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribedResult" type="sch0:RxMedicationResult">
+            <xs:annotation>
+              <xs:documentation>Результат обработки назначения и дочерних рецептов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationFillResult">
+        <xs:sequence>
+          <xs:element name="MedicationIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RxPrescriptionsResult">
+            <xs:annotation>
+              <xs:documentation>Результаты обработки дочерних Рецептов</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxResult">
+                  <xs:annotation>
+                    <xs:documentation>Результат обработки конкретного рецепта</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="PrescriptionStatus" type="sch0:PrescriptionStatus">
+            <xs:annotation>
+              <xs:documentation>Статус по результатам обработки назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationErrors">
+            <xs:annotation>
+              <xs:documentation>Ошибки обработки назначения</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Error" type="sch0:AbstractError">
+                  <xs:annotation>
+                    <xs:documentation>Ошибка обработки</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationResultForMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Результат обработки группы назначений ЛП и рецептов ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribedResult" type="sch0:RxMedicationResult">
+            <xs:annotation>
+              <xs:documentation>Результат обработки назначения и дочерних рецептов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationResult">
+        <xs:annotation>
+          <xs:documentation>Тип = результат обработки Назначения ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="MedicationIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RxPrescriptionsResult">
+            <xs:annotation>
+              <xs:documentation>Результаты обработки дочерних Рецептов</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxResult">
+                  <xs:annotation>
+                    <xs:documentation>Результат обработки конкретного рецепта</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="PrescriptionStatus" type="sch0:PrescriptionStatus">
+            <xs:annotation>
+              <xs:documentation>Статус по результатам обработки назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationErrors">
+            <xs:annotation>
+              <xs:documentation>Ошибки обработки назначения</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Error" type="sch0:AbstractError">
+                  <xs:annotation>
+                    <xs:documentation>Ошибка обработки</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRxResult">
+        <xs:annotation>
+          <xs:documentation>Тип = Результат обработки Рецепта ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="RxPrescriptionIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxType" type="sch0:RxTypes">
+            <xs:annotation>
+              <xs:documentation>Тип рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxSeries" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Серия рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxNumber" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Номер рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RxErrors">
+            <xs:annotation>
+              <xs:documentation>Ошибка обработки рецепта</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Error" type="sch0:AbstractError">
+                  <xs:annotation>
+                    <xs:documentation>Ошибка обработки</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="RxPrescriptionStatus" type="sch0:RxPrescriptionStatus">
+            <xs:annotation>
+              <xs:documentation>Статус по результатам обработки рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MedicalDevice">
+        <xs:sequence>
+          <xs:element name="TO-DO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DictionaryCode">
+        <xs:annotation />
+        <xs:sequence>
+          <xs:element name="Text" type="sch0:an1..210" />
+          <xs:element minOccurs="0" name="Code" type="sch0:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="HistoryPrescriber">
+        <xs:annotation>
+          <xs:documentation>Тип = Врач МО, выписавший Назначение ЛП/Рецепты ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:PrescriberID">
+            <xs:annotation>
+              <xs:documentation>Код мед работника в федеральном регистре медицинских
+                        работников
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="sch0:NameType">
+            <xs:annotation>
+              <xs:documentation>ФИО медицинского работника</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Specialty" type="sch0:DictionaryCode">
+            <xs:annotation>
+              <xs:documentation>Врачебная специальность</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DrugProductCodeWithText">
+        <xs:annotation>
+          <xs:documentation>Закодированный продукт</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Code" type="sch0:Code">
+            <xs:annotation>
+              <xs:documentation>Код справочника</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Qualifier" type="sch0:AllergyDrugProductCodedQualifier">
+            <xs:annotation>
+              <xs:documentation>Уровень справочника PD, DD</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Text" type="sch0:an" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DrugProductCodeWithDoseText">
+        <xs:annotation>
+          <xs:documentation>Закодированный продукт МНН + лек. форма + дозировка текстом</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="GenericName" type="sch0:DrugProductCodeWithText">
+            <xs:annotation>
+              <xs:documentation>МНН ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DrugForm" type="sch0:DrugProductCodeWithText">
+            <xs:annotation>
+              <xs:documentation>Лекарственная форма ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Strength" type="sch0:an1..100">
+            <xs:annotation>
+              <xs:documentation>Дозировка ЛП текстом</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="AllergyDrugProductCodedQualifier">
+        <xs:annotation>
+          <xs:documentation>Перечень кодов, применяемх для идентификации аллергена и
+                ЛС
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="ScreenableIngredient">
+            <xs:annotation>
+              <xs:documentation>Ингридиент</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AllergenClass">
+            <xs:annotation>
+              <xs:documentation>класс аллергенов</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PackagedDrug">
+            <xs:annotation>
+              <xs:documentation>ЛП торговая позиция</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DispensableDrug">
+            <xs:annotation>
+              <xs:documentation>Торговая позиция обобщенно</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ManufacturedDrug">
+            <xs:annotation>
+              <xs:documentation>ЛП торговое наименование</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DrugName">
+            <xs:annotation>
+              <xs:documentation>Торговое наименование ЛС</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="GenericNameForm">
+            <xs:annotation>
+              <xs:documentation>МНН с формой выпуска</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="GenericDrug">
+            <xs:annotation>
+              <xs:documentation>Полное МНН</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="GenericName">
+            <xs:annotation>
+              <xs:documentation>МНН</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DrugForm">
+            <xs:annotation>
+              <xs:documentation>Форма выпуска</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="AllergyChoice">
+        <xs:choice>
+          <xs:element name="NoKnownAllergies" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Если элемент AllergyOrAdverseEvent отправлен, он должен
+                        включать в себя все известные аллергические реакции пациента, иначе
+                        NoKnownAllergies = Y
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="unbounded" name="Allergies" type="sch0:AllergyType" />
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationsHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = множество запрошенных схем назначений (ЛП/МИ)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="PrescribedMedicationHistory" type="sch0:PrescribedMedicationHistory">
+            <xs:annotation>
+              <xs:documentation>Запрошенная схема назначений (ЛП/МИ)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = запрошенная схема назначений (ЛП/МИ) с информацией о МО, враче, пациенте, фактах
+                отпуска и т.д.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ReferenceNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Номер запроса</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Patient" type="sch0:Patient" />
+          <xs:element name="Prescriber" type="sch0:HistoryPrescriber">
+            <xs:annotation>
+              <xs:documentation>Медицинский работник</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PracticeLocation" type="sch0:PracticeLocationType">
+            <xs:annotation>
+              <xs:documentation>Данные МО или ИП (частнопрактикующий врач)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AllergyOrAdverseEvent" type="sch0:AllergyChoice">
+            <xs:annotation>
+              <xs:documentation>Перечень аллергий</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Diagnosis" type="sch0:Diagnosis">
+            <xs:annotation>
+              <xs:documentation>Диагнозы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WrittenDate" type="sch0:UtcDateType">
+            <xs:annotation>
+              <xs:documentation>Дата схемы назначений</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PrescribedMedication" type="sch0:PrescribedMedicationForHistory">
+            <xs:annotation>
+              <xs:documentation>Схема медикаментозного лечения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicalDevices">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="MedicalDevice" type="sch0:MedicalDevice" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationForHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = запрошенная схема назначений ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribed" type="sch0:RxMedicationHistory">
+            <xs:annotation>
+              <xs:documentation>Назначенный препарат</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationsPrescribedRecomendations" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Общие рекомендации по выполненным назначениям ЛП в схеме</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationForPharmacy">
+        <xs:annotation>
+          <xs:documentation>Тип = набор (необязательно схема) назначений ЛП, запрошенных Аптекой</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribed" type="sch0:RxMedicationHistoryForPharmacy">
+            <xs:annotation>
+              <xs:documentation>Назначенный препарат</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedication">
+        <xs:annotation>
+          <xs:documentation>Тип = Схема назначений ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribed" type="sch0:RxMedicationFromMO">
+            <xs:annotation>
+              <xs:documentation>Назначенный ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationsPrescribedRecomendations" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Общие рекомендации по выполненным
+                        назначениям в схеме
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationCancel">
+        <xs:annotation>
+          <xs:documentation>Тип = Набор (необязательно схема) назначений ЛП, рецепты которых отменяет фармацевт
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribedCancel" type="sch0:RxMedicationForPharmacyCancelAndDelayed">
+            <xs:annotation>
+              <xs:documentation>Назначение ЛП, рецепт(-ы) которого отменяет фармацевт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationCancelFromMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Набор (необязательно схема) назначений ЛП, которые (рецепты которых) отменяет врач
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribedCancelFromMO" type="sch0:RxMedication">
+            <xs:annotation>
+              <xs:documentation>Назначение ЛП (возможно рецепты) который отменяет врач</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescribedMedicationDelayed">
+        <xs:annotation>
+          <xs:documentation>Тип = Набор (необязательно схема) назначений ЛП, рецепты которых берутся в аптеке на
+                отложенное обслуживание
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="MedicationPrescribedDelayed" type="sch0:RxMedicationForPharmacyCancelAndDelayed">
+            <xs:annotation>
+              <xs:documentation>Назначение ЛП, рецепт(-ы) которых берутся Аптекой на отложенное обслуживание
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AllergyType">
+        <xs:sequence>
+          <xs:element name="DrugProductCoded" type="sch0:DrugProductCodeWithText">
+            <xs:annotation>
+              <xs:documentation>Ссылка на справочник аллергенов</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReactionCoded" type="sch0:DictionaryCode">
+            <xs:annotation>
+              <xs:documentation>Код аллергической реакции</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SeverityCoded" type="sch0:DictionaryCode">
+            <xs:annotation>
+              <xs:documentation>Уровень риска</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PrescriberID">
+        <xs:annotation>
+          <xs:documentation>Идентификатор врача</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ID" type="sch0:an1..50" />
+          <xs:element name="Snils" type="sch0:an1..35" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PracticeLocationType">
+        <xs:annotation>
+          <xs:documentation>Тип = Мед организация</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:FacilityID">
+            <xs:annotation>
+              <xs:documentation>Идентификатор МО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BusinessName" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Наименование МО/ ИП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Licence" type="sch0:Licence" />
+          <xs:element name="Address" type="sch0:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адресс МО/ИП, текст</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FacilityID">
+        <xs:annotation>
+          <xs:documentation>ID МО</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ID" type="sch0:an1..50" />
+          <xs:element minOccurs="0" name="MedicareNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Код МО в кодировке единого реестра МО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Ogrn" type="sch0:an13..15" />
+          <xs:element minOccurs="0" name="OKATO" type="sch0:an1..15" />
+          <xs:element minOccurs="0" name="OKPO" type="sch0:an8..10" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NameType">
+        <xs:annotation>
+          <xs:documentation>ФИО</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="LastName" type="sch0:an1..35" />
+          <xs:element name="FirstName" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="MiddleName" type="sch0:an1..35" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AddressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KladrCode" type="sch0:an1..19">
+            <xs:annotation>
+              <xs:documentation>Код КЛАДР</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AddressText" type="sch0:an1..1000" />
+          <xs:element minOccurs="0" name="PostalCode" type="sch0:an">
+            <xs:annotation>
+              <xs:documentation>Индекс</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CommunicationNumbersType">
+        <xs:sequence>
+          <xs:element name="PrimaryTelephone" type="sch0:PhoneType" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicMail" type="sch0:MailAddressType" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="OtherTelephone" type="sch0:PhoneType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PhoneType">
+        <xs:sequence>
+          <xs:element name="Number" type="sch0:an1..25" />
+          <xs:element minOccurs="0" name="Extension" type="sch0:an1..8" />
+          <xs:element minOccurs="0" name="SupportsSMS" type="sch0:BooleanCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="MailAddressType">
+        <xs:annotation>
+          <xs:documentation>Тип почтового адреса</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an1..80" />
+      </xs:simpleType>
+      <xs:complexType name="PatientIDForMO">
+        <xs:annotation>
+          <xs:documentation>PatientIDForMO - набор идентификаторов пациента для МО</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Snils" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="MedicareNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Номер полиса ОМС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MedicalNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Номер карты (МКАБ, ЭМК)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Inn" type="sch0:an1..35" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PatientIDForPharmacy">
+        <xs:annotation>
+          <xs:documentation>PatientIDForPharmacy - набор идентификаторов пациента для Аптеки</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Snils" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="MedicareNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Номер полиса ОМС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Inn" type="sch0:an1..35" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonalRepresentativeID">
+        <xs:annotation>
+          <xs:documentation>PersonalRepresentativeID - набор идентификаторов представителя пациента</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Snils" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="MedicareNumber" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Номер полиса ОМС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PatientLocation">
+        <xs:annotation>
+          <xs:documentation>Размещение пациента в стационаре (палата и т.п.)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FacilityUnit" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="Bed" type="sch0:an1..10" />
+          <xs:element minOccurs="0" name="Room" type="sch0:an1..10" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PatientForMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Пациент для использования в МО</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:PatientIDForMO">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пациента в МО</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="sch0:NameType">
+            <xs:annotation>
+              <xs:documentation>ФИО пациента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Gender" type="sch0:Gender">
+            <xs:annotation>
+              <xs:documentation>Пол</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DateOfBirth" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PatientLocation" type="sch0:PatientLocation">
+            <xs:annotation>
+              <xs:documentation>Расположение в стационаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PregnancyIndicator" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак - является беременной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GestationalAge" type="sch0:n1..2">
+            <xs:annotation>
+              <xs:documentation>срок беременности в неделях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PersonalRepresentative">
+        <xs:annotation>
+          <xs:documentation>Тип = Представитель пациента (родитель, опекун и т.д.)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:PersonalRepresentativeID">
+            <xs:annotation>
+              <xs:documentation>Идентификатор представителя пациента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="sch0:NameType">
+            <xs:annotation>
+              <xs:documentation>ФИО представителя пациента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Gender" type="sch0:Gender">
+            <xs:annotation>
+              <xs:documentation>Пол</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DateOfBirth" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PatientForPharmacy">
+        <xs:annotation>
+          <xs:documentation>Тип = Пациент для использования в Аптеке</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:PatientIDForPharmacy">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пациента в Аптеке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Gender" type="sch0:Gender">
+            <xs:annotation>
+              <xs:documentation>Пол</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DateOfBirth" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PatientLocation" type="sch0:PatientLocation">
+            <xs:annotation>
+              <xs:documentation>Расположение в стационаре</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PregnancyIndicator" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак - является беременной</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GestationalAge" type="sch0:n1..2">
+            <xs:annotation>
+              <xs:documentation>срок беременности в неделях</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Patient">
+        <xs:annotation>
+          <xs:documentation>Тип = Пациент по умолчанию</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:PatientForMO" />
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PatientType">
+        <xs:sequence>
+          <xs:element name="HumanPatient" type="sch0:Patient" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="Gender">
+        <xs:annotation>
+          <xs:documentation>Справочник - пол</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="M">
+            <xs:annotation>
+              <xs:documentation>Мужской</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="F">
+            <xs:annotation>
+              <xs:documentation>Женский</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="U">
+            <xs:annotation>
+              <xs:documentation>Не определено</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="SigCode">
+        <xs:annotation>
+          <xs:documentation>Значение справочника: Code - код Text - текстовое знаение Qualifier -
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Text" type="sch0:an" />
+          <xs:element name="Qualifier" type="sch0:SigCodes" />
+          <xs:element name="Code" type="sch0:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="SigCodes">
+        <xs:annotation>
+          <xs:documentation>Используемые классификаторы для кодов: Medicata,
+                SNOMED
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="SNOMED">
+            <xs:annotation>
+              <xs:documentation>Коды SNOMED Systematized Nomenclature of Medicine-Clinical
+                        Terms (SNOMED)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MEDICATA">
+            <xs:annotation>
+              <xs:documentation>Коды справочников системы Medicata</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="RxMedicationHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = Назначение ЛП + дочерние рецепты + факты отпуска + текущий статус</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxHistory" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="PrescriptionStatus" type="sch0:PrescriptionStatus">
+                <xs:annotation>
+                  <xs:documentation>Статус назначения</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="MedicationsDispensed">
+                <xs:annotation>
+                  <xs:documentation>Факты отпуска ЛП по назначению</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="MedicationDispensed" type="sch0:RxMedicationDispensedHistoryForMO" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationBase">
+        <xs:annotation>
+          <xs:documentation>Тип = Назначение ЛП - Базовая часть</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="MedicationIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxWrittenDate" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата назначения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RxWrittenEndDate" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата окончания действия назначения (только для длительного назначения)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DrugCoded" type="sch0:DrugCoded">
+            <xs:annotation>
+              <xs:documentation>Назначенный ЛП (МНН или Торговое
+                        наименование)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TradeNameFlag" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак выписки по Торговому наименованию</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Quantity" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Назначенное количество ЛП на курс (кратное
+                        упаковке)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Sig" type="sch0:Sig">
+            <xs:annotation>
+              <xs:documentation>Способ применения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Substitutions" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Возможность замены ЛП при отпуске в аптеке</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DeliveryRequest" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак - Необходима доставка</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DeliveryLocation" type="sch0:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес доставки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChronicDiseaseFlag" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак Пациенту с хроническим заболеванием
+                        (признак длительного назначения)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxMedication">
+        <xs:annotation>
+          <xs:documentation>Тип = назначение с дочерними рецептами (опц)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxExtBarcode" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationForPharmacyCancelAndDelayed">
+        <xs:annotation>
+          <xs:documentation>Тип = назначение с дочерними рецептами (обяз) для отмены или взятия на отложенное
+                обслуживание фармацевтом аптеки
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationBase">
+            <xs:sequence>
+              <xs:element name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxExtBarcode" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationHistoryForPharmacy">
+        <xs:annotation>
+          <xs:documentation>Тип = Назначение ЛП + дочерние рецепты + (предыдущие) факты отпуска для Аптеки
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationBase">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="RxPrescription" type="sch0:AdministrativeRxHistory" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="MedicationsDispensed">
+                <xs:annotation>
+                  <xs:documentation>Факты отпуска ЛП по назначению</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="MedicationDispensed" type="sch0:RxMedicationDispensedHistoryForPharmacy" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationFromMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Назначение ЛП + рецепты ЛП для получения из МО (NewRX)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedication">
+            <xs:sequence>
+              <xs:element name="ElectronicRxAgreement" type="sch0:BooleanCode">
+                <xs:annotation>
+                  <xs:documentation>Согласие пациента/представителя на электронный рецепт/назначение
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="SearchDrugCoded" type="sch0:DrugProductCodeWithText">
+                <xs:annotation>
+                  <xs:documentation>ЛП, который искал врач при создании назначения</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensedAbstract">
+        <xs:annotation>
+          <xs:documentation>Тип = Вид и количество отпущенного ЛП в факте отпуска</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="DrugCoded" type="sch0:DrugCodedDispensed">
+            <xs:annotation>
+              <xs:documentation>Отпущенный ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DrugInfo" type="sch0:DrugInfo">
+            <xs:annotation>
+              <xs:documentation>Дополнительные сведения об отпущенном ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DispensedQuantity">
+            <xs:annotation>
+              <xs:documentation>Отпущенное количество ЛП - количество форм выпуска (таблетки, капсулы и тд)
+                    </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="Strength" type="sch0:Strength">
+                  <xs:annotation>
+                    <xs:documentation>Дозировка ЛП (активоность) , заполняется в случае отличия дозировки
+                                    отпущенного ЛП от назначенного и не заполнен ProductCode (не из справочника ЛП)
+                                </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Quantity" type="sch0:n1..10" />
+                <xs:element name="PackageQuantity" type="sch0:n1..8" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationCost" type="sch0:n1..10">
+            <xs:annotation>
+              <xs:documentation>Стоимость отпущенного ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensedAbstractForMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Вид и количество отпущенного ЛП в факте отпуска для показа врачу в МО
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="DrugCoded" type="sch0:DrugCodedDispensed">
+            <xs:annotation>
+              <xs:documentation>Отпущенный ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DrugInfo" type="sch0:DrugInfo">
+            <xs:annotation>
+              <xs:documentation>Дополнительные сведения об отпущенном ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DispensedQuantity">
+            <xs:annotation>
+              <xs:documentation>Отпущенное количество ЛП - количество форм выпуска (таблетки, капсулы и тд)
+                    </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="Strength" type="sch0:Strength">
+                  <xs:annotation>
+                    <xs:documentation>Дозировка ЛП (активоность) , заполняется в случае отличия дозировки
+                                    отпущенного ЛП от назначенного и не заполнен ProductCode (не из справочника ЛП)
+                                </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="Quantity" type="sch0:n1..10" />
+                <xs:element name="PackageQuantity" type="sch0:n1..8" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensedHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = Факт отпуска ЛП по назначению ЛП в аптеке</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationDispensedAbstract">
+            <xs:sequence>
+              <xs:element name="DispensedDate" type="sch0:UtcDateType">
+                <xs:annotation>
+                  <xs:documentation>Дата отпуска</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="Pharmacy" type="sch0:Pharmacy">
+                <xs:annotation>
+                  <xs:documentation>Информация об аптеке</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensedHistoryForMO">
+        <xs:annotation>
+          <xs:documentation>Тип = Факт отпуска ЛП по назначению ЛП в аптеке для показа врачу в МО</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationDispensedAbstractForMO">
+            <xs:sequence>
+              <xs:element name="DispensedDate" type="sch0:UtcDateType">
+                <xs:annotation>
+                  <xs:documentation>Дата отпуска</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="Pharmacy" type="sch0:Pharmacy">
+                <xs:annotation>
+                  <xs:documentation>Информация об аптеке</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensedHistoryForPharmacy">
+        <xs:annotation>
+          <xs:documentation>Тип = Факт отпуска ЛП по назначению ЛП в аптеке для отображения в других аптеках
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationDispensedAbstract">
+            <xs:sequence>
+              <xs:element name="DispensedDate" type="sch0:UtcDateType">
+                <xs:annotation>
+                  <xs:documentation>Дата отпуска</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="RxPrescriptionID">
+                <xs:annotation>
+                  <xs:documentation>ID рецептов, по которым проведен факт отпуска</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="2" name="RxPrescriptionIdentification" type="sch0:AdministrativeRxIdentification" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="RxMedicationDispensed">
+        <xs:annotation>
+          <xs:documentation>Тип = факт отпуска в аптеке, в т.ч. рецепты, в разрезе которых осуществляется отпуск
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationDispensedAbstract">
+            <xs:sequence>
+              <xs:element name="MedicationIdentification" type="sch0:an1..50">
+                <xs:annotation>
+                  <xs:documentation>Идентификатор назначения. Ссылка на конкретное назначение, по которому
+                                происходит отпуск в аптеке
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="2" name="RxPrescription" type="sch0:AdministrativeRxDispensedStatus" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="PaperRxMedicationDispensed">
+        <xs:annotation>
+          <xs:documentation>Тип = факт отпуска в аптеке по бумажному рецепту</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:RxMedicationDispensedAbstract">
+            <xs:sequence>
+              <xs:element name="RxPrescriptions">
+                <xs:annotation>
+                  <xs:documentation>Рецепты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="2" name="RxPrescription" type="sch0:AdministrativePaperRxDispensedStatus" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRxHistory">
+        <xs:annotation>
+          <xs:documentation>Тип = Рецепт ЛП + текущий статус</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:AdministrativeRxExtBarcode">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptionStatus" type="sch0:RxPrescriptionStatus">
+                <xs:annotation>
+                  <xs:documentation>Статус рецепта</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="ChangeReasonText" type="sch0:an1..260">
+                <xs:annotation>
+                  <xs:documentation>Причина аннулирования рецепта ЛП</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRxDispensedStatus">
+        <xs:annotation>
+          <xs:documentation>Тип = Рецепт ЛП + признак полного отпуска ЛП по рецепту</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:AdministrativeRxExtBarcode">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptionDispensedFull" type="sch0:BooleanCode">
+                <xs:annotation>
+                  <xs:documentation>признак полного отпуска ЛП по рецепту</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AdministrativePaperRxDispensedStatus">
+        <xs:annotation>
+          <xs:documentation>Тип = Рецепт ЛП + признак полного отпуска ЛП по рецепту</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:AdministrativePaperRx">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="RxPrescriptionDispensedFull" type="sch0:BooleanCode">
+                <xs:annotation>
+                  <xs:documentation>признак полного отпуска ЛП по бумажному рецепту</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRxIdentification">
+        <xs:annotation>
+          <xs:documentation>Тип = ID Рецепта ЛП</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="RxPrescriptionIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxType" type="sch0:RxTypes">
+            <xs:annotation>
+              <xs:documentation>Тип рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxSeries" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Серия рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxNumber" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Номер рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRxExtBarcode">
+        <xs:annotation>
+          <xs:documentation>Тип = Рецепт ЛП, дополненный штрих-кодом</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:AdministrativeRx">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="BarcodeBase64" type="sch0:BaseBinaryType">
+                <xs:annotation>
+                  <xs:documentation>Штрих-код рецепта в base64 encoded</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="IssuedPaperRx" type="sch0:BooleanCode">
+                <xs:annotation>
+                  <xs:documentation>Выписан бумажный рецепт/рецепты к текущему назначению</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="AdministrativeRx">
+        <xs:annotation>
+          <xs:documentation>Тип = Рецепт ЛП как административный документ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="RxPrescriptionIdentification" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>GUID рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxType" type="sch0:RxTypes">
+            <xs:annotation>
+              <xs:documentation>Тип рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxSeries" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Серия рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxNumber" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Номер рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxWrittenDate" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата выписки рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DaysSupply" type="sch0:n1..3">
+            <xs:annotation>
+              <xs:documentation>Срок действия рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MedicalOrganization" type="sch0:PracticeLocationType">
+            <xs:annotation>
+              <xs:documentation>Мед организация</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Prescriber">
+            <xs:complexType>
+              <xs:complexContent mixed="false">
+                <xs:restriction base="sch0:HistoryPrescriber">
+                  <xs:sequence>
+                    <xs:element name="Identification" type="sch0:PrescriberID">
+                      <xs:annotation>
+                        <xs:documentation>Код мед работника в федеральном регистре
+                                            медицинских работников
+                                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="Name" type="sch0:NameType">
+                      <xs:annotation>
+                        <xs:documentation>ФИО медицинского
+                                            работника
+                                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="Specialty" type="sch0:DictionaryCode">
+                      <xs:annotation>
+                        <xs:documentation>Врачебная специальность
+                                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+                      <xs:annotation>
+                        <xs:documentation>Контактные данные</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:restriction>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Patient" type="sch0:RxPatientType">
+            <xs:annotation>
+              <xs:documentation>Пациент</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Diagnosis" type="sch0:Diagnosis">
+            <xs:annotation>
+              <xs:documentation>Диагноз</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Rp" type="sch0:RpType" />
+          <xs:element minOccurs="0" name="PriorAuthorization" type="sch0:PriorAuthorizationType">
+            <xs:annotation>
+              <xs:documentation>признак срочности отпуска для случая отсроченного обслуживания
+                        Будет учитываться в случае, если при обращении в аптеку данного ЛП не
+                        оказалось, тогда рецепт принимается на отсроченное обслуживание: а) с
+                        пометкой cito - обслуживается в течение 2х рабочих дней со дня обращения в
+                        аптеку; б) с пометкой statim - обслуживается в течение 1го рабочего дня со
+                        дня обращения в аптеку; в) обслуживается в течение 5ти рабочих дней со дня
+                        обращения в аптеку; г) обслуживается в течение 10ти рабочих дней со дня
+                        обращения в аптеку; д) обслуживается в течение 15ти рабочих дней со дня
+                        обращения в аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BaseDoseOverride" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак превышения однократной дозы
+                        (1175н - аналог восклицательного знака)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialPurpose" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак По специальному назначению</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FollowingFlag" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак Повторно выписываемого рецепта на
+                        НиП (для розового бланка)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ChronicDiseaseFlag" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак Пациенту с хроническим заболеванием</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DispensePeriod" type="sch0:an1..100">
+            <xs:annotation>
+              <xs:documentation>Периодичность отпуска ЛП (ежемесячно, еженедельно, иные
+                        периоды)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute ref="ns0:Id" use="optional" />
+      </xs:complexType>
+      <xs:complexType name="AdministrativePaperRx">
+        <xs:annotation>
+          <xs:documentation>Тип = бумажный Рецепт ЛП как административный документ</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="RxType" type="sch0:RxTypes">
+            <xs:annotation>
+              <xs:documentation>Тип рецепта:
+                        - rx1481u04
+                        или
+                        - rx1481u88
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxSeries" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Серия рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxNumber" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Номер рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RxWrittenDate" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата выписки рецепта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MedicalOrganizationOGRN" type="sch0:an13..15">
+            <xs:annotation>
+              <xs:documentation>Мед организация - ОГРН
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PatientSnils" type="sch0:an1..35">
+            <xs:annotation>
+              <xs:documentation>Пациент - СНИЛС</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute ref="ns0:Id" use="optional" />
+      </xs:complexType>
+      <xs:complexType name="RpType">
+        <xs:sequence>
+          <xs:element name="MedicationFreeText" type="sch0:an1..500">
+            <xs:annotation>
+              <xs:documentation>Наименование ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Dosing" type="sch0:an1..100">
+            <xs:annotation>
+              <xs:documentation>Дозировка ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DosingText" type="sch0:an1..210">
+            <xs:annotation>
+              <xs:documentation>Доза прописью
+                        (4н)
+                        При выписывании наркотических и психотропных лекарственных препаратов списков II и III Перечня,
+                        иных лекарственных препаратов, подлежащих предметно-количественному учету, доза которых
+                        превышает высший однократный прием, медицинский работник пишет дозу этого препарата прописью и
+                        ставит восклицательный знак
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MedicationQuantity" type="sch0:n1..10">
+            <xs:annotation>
+              <xs:documentation>Количество ЛП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MedicationQuantityText" type="sch0:an1..100">
+            <xs:annotation>
+              <xs:documentation>Количество ЛП прописью для рецепта 107/у-НП</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SignaFreeText" type="sch0:an1..1000" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Diagnosis">
+        <xs:sequence>
+          <xs:element name="Primary" type="sch0:DictionaryCode">
+            <xs:annotation>
+              <xs:documentation>Первичный диагноз</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Secondary" type="sch0:DictionaryCode">
+            <xs:annotation>
+              <xs:documentation>Сопутствующий диагноз</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DrugCoded">
+        <xs:annotation />
+        <xs:choice>
+          <xs:element name="ProductCode" type="sch0:DrugProductCodeWithText">
+            <xs:annotation>
+              <xs:documentation>Значение из справочника: а) Торговое наименование (DispensableDrugD); б) МНН,
+                        включающая концентрацию и форму выпуска (GenericDrug)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence>
+            <xs:element name="IndividualManufactured" type="sch0:BooleanCode">
+              <xs:annotation>
+                <xs:documentation>Признак - ЛП индивидуального
+                            изготовления
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductClarifyingFreeText" type="sch0:an1..1000">
+              <xs:annotation>
+                <xs:documentation>Свободное описание ЛП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="CompositeProductCode" type="sch0:DrugProductCodeWithDoseText">
+            <xs:annotation>
+              <xs:documentation>Значение из справочника: МНН + лек. форма + Дозировка текстом
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="DrugCodedDispensed">
+        <xs:annotation />
+        <xs:choice>
+          <xs:element name="ProductCode" type="sch0:DrugProductCodeWithText">
+            <xs:annotation>
+              <xs:documentation>Значение из справочника: а) Торговое наименование (DispensableDrug); б) МНН,
+                        включающая концентрацию и форму выпуска (GenericDrug)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence>
+            <xs:element name="IndividualManufactured" type="sch0:BooleanCode">
+              <xs:annotation>
+                <xs:documentation>Признак - ЛП индивидуального
+                            изготовления
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="ProductClarifyingFreeText" type="sch0:an1..1000">
+              <xs:annotation>
+                <xs:documentation>Свободное описание ЛП</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="DrugInfo">
+        <xs:annotation>
+          <xs:documentation>Информация об отпущенном препарате</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EANCode" type="sch0:an13..15">
+            <xs:annotation>
+              <xs:documentation>Штрихкод производителя</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KIZ" type="sch0:an1..210">
+            <xs:annotation>
+              <xs:documentation>Дынные двухмерного штрих–кода DataMatrix
+                        КИЗ
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Strength">
+        <xs:annotation>
+          <xs:documentation>Дозировка ЛП (активность, концентрация)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="StrengthValue" type="sch0:an1..70">
+            <xs:annotation>
+              <xs:documentation>Значение дозировки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StrengthUnitOfMeasure" type="sch0:NCICode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения дозировки (активности)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NCICode">
+        <xs:annotation>
+          <xs:documentation>Изменить??? NCPDP Constrained Code to value sets defined by NCI. See
+                External Code List Introduction for information on NCI Thesaurus Code Lists.
+                http://www.cancer.gov/cancertopics/terminologyresources/page7
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Code" type="sch0:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PharmacyID">
+        <xs:annotation>
+          <xs:documentation>Идентификаторы Аптеки</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ID" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>Идентификатор Аптеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Ogrn" type="sch0:an13..15" />
+          <xs:element minOccurs="0" name="MedicareNumber" type="sch0:an1..35" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Pharmacist">
+        <xs:annotation>
+          <xs:documentation>Фармацевт в аптеке</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Identification" type="sch0:PharmacistID" />
+          <xs:element name="Name" type="sch0:NameType">
+            <xs:annotation>
+              <xs:documentation>ФИО фармацевта</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PharmacistID">
+        <xs:annotation>
+          <xs:documentation>Идентификаторы фармацевта</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ID" type="sch0:an1..50" />
+          <xs:element minOccurs="0" name="Snils" type="sch0:an1..35" />
+          <xs:element minOccurs="0" name="Ogrn" type="sch0:an13..15" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TitrationType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PharmacyToTitrateDose" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Необходимость в титровании дозы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TitrationDose" type="sch0:TitrationDose" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TitrationDose">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="10" name="Measurement" type="sch0:TitrationDoseMeasurementType" />
+          <xs:element minOccurs="0" name="MeasurementTimingAndDuration" type="sch0:TitrationTimingAndDuration" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TitrationTimingAndDuration">
+        <xs:choice>
+          <xs:sequence>
+            <xs:choice>
+              <xs:element name="MeasurementAdministrationTiming" type="sch0:MeasurementTiming" />
+              <xs:element name="MeasurementFrequency" type="sch0:MeasurementFrequencyTiming" />
+              <xs:element name="MeasurementInterval" type="sch0:MeasurementIntervalTiming" />
+            </xs:choice>
+          </xs:sequence>
+          <xs:element name="MeasurementDuration" type="sch0:MeasurementDuration" />
+          <xs:element name="MeasurementDurationTrigger" type="sch0:MeasurementDurationTriggerTiming" />
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="TitrationDoseMeasurementType">
+        <xs:annotation>
+          <xs:documentation>Measurement Structure used for Observation</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="VitalSign" type="sch0:an">
+            <xs:annotation>
+              <xs:documentation>Physical condition identifier.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LOINCVersion" type="sch0:an" />
+          <xs:element name="Value" type="sch0:n1..18">
+            <xs:annotation>
+              <xs:documentation>Actual value of clinical information.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UnitOfMeasure" type="sch0:an">
+            <xs:annotation>
+              <xs:documentation>The code representing the
+                        TitrationDoseMeasurementValueUnitOfMeasureText.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UCUMVersion" type="sch0:an" />
+          <xs:element minOccurs="0" name="MinimumMeasurementValue" type="sch0:n1..18">
+            <xs:annotation>
+              <xs:documentation>The value representing the bottom of the range that is
+                        acceptable for the desired clinical effect of the
+                        medication.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MaximumMeasurementValue" type="sch0:n1..18" />
+          <xs:element minOccurs="0" name="MeasurementNotes" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Free text of the titration dose
+                        measurement.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeasurementTiming">
+        <xs:sequence>
+          <xs:sequence minOccurs="0">
+            <xs:element name="MeasurementTimingNumericValue" type="sch0:n" />
+            <xs:element name="VariableMeasurementTimingModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Used to express when there is more than one time as to
+                            whether the times are all required to be used (AND) or if any of the
+                            times can be used (OR). (TO) is used if the Measurement Timing provides
+                            for a range.
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0">
+              <xs:element name="AdministrationTimingNumericValue" type="sch0:n" />
+            </xs:sequence>
+            <xs:element name="MeasurementTimingUnits" type="sch0:SigCode" />
+          </xs:sequence>
+          <xs:element minOccurs="0" name="MeasurementTimingModifier" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Examples such as before, during, with, without, after, while,
+                        at., on, start, end.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MeasurementTimingEvent" type="sch0:SigCode" />
+          <xs:element minOccurs="0" name="MeasurementTimingClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Used to add clarity to the titration measurement timing for
+                        elements that cannot be codified.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeasurementFrequencyTiming">
+        <xs:sequence>
+          <xs:element name="MeasurementFrequencyNumericValue" type="sch0:n" />
+          <xs:sequence minOccurs="0">
+            <xs:element name="MeasurementVariableFrequencyModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Used to express when there is more than one Measurement
+                            Frequency as to whether the frequencies are all required to be used
+                            (AND) or if any of the frequencies can be used
+                            (OR/TO).
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="MeasurementFrequencyNumericValue" type="sch0:n" />
+          </xs:sequence>
+          <xs:element name="MeasurementrequencyUnits" type="sch0:SigCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeasurementIntervalTiming">
+        <xs:sequence>
+          <xs:element name="MeasurementIntervalNumericValue" type="sch0:n" />
+          <xs:sequence minOccurs="0">
+            <xs:element name="MeasurementVariableIntervalModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Used to express when there is more than one Interval as to
+                            whether the intervals are all required to be used (AND) or if any of the
+                            intervals can be used (OR/TO).
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="MeasurementIntervalNumericValue" type="sch0:n" />
+          </xs:sequence>
+          <xs:element name="MeasurementIntervalUnits" type="sch0:SigCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeasurementDuration">
+        <xs:sequence>
+          <xs:element name="MeasurementDurationNumericValue" type="sch0:n" />
+          <xs:element name="MeasurementDurationText" type="sch0:SigCode" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MeasurementDurationTriggerTiming">
+        <xs:sequence>
+          <xs:element name="MeasurementTrigger" type="sch0:SigCode" />
+          <xs:element minOccurs="0" name="MeasurementDurationClarifyingFreeText" type="sch0:an1..255" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdditionalInstructionsType">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="MultipleInstructionModifier" type="sch0:ANDORTHENNOT">
+            <xs:annotation>
+              <xs:documentation>Мультипликатор инструкций</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Instruction" type="sch0:Instruction">
+            <xs:annotation>
+              <xs:documentation>Структурированная инструкция по дозировке и приему ЛП.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Sig">
+        <xs:sequence>
+          <xs:element name="SigText" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Способ применения (в виде свободного текста): - (разовая) доза
+                        - частота приема - время приема относительно сна (утром, на ночь) - время
+                        приема ЛП относительно приема пищи (до, после) - кратность приема или
+                        введения ЛП - длительность курса приема или введения ЛП и
+                        т.д.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="CodeSystem">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="MedicataVersion" type="sch0:an">
+                    <xs:annotation>
+                      <xs:documentation>Код версии справоников</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Instruction" type="sch0:Instruction">
+              <xs:annotation>
+                <xs:documentation>Структурированная инструкция по дозировке и приему
+                            ЛП.
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0" maxOccurs="49">
+              <xs:element name="AdditionalInstructions" type="sch0:AdditionalInstructionsType">
+                <xs:annotation />
+              </xs:element>
+            </xs:sequence>
+            <xs:sequence minOccurs="0" maxOccurs="50">
+              <xs:element name="IndicationForUse" type="sch0:Indication">
+                <xs:annotation>
+                  <xs:documentation>Показания к применению (Условия для начала
+                                использования) лекарственного средства ( для передачи пациенту ),
+                                Могут отличаться от клинических показаний к применению. Например,
+                                принимать для улучшения сна, хотя диагноз может
+                                бессонница.
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="50" name="MaximumDoseRestriction" type="sch0:MaximumDoseRestriction" />
+            <xs:element minOccurs="0" name="ClarifyingFreeText" type="sch0:an1..255">
+              <xs:annotation>
+                <xs:documentation>Ограничение максимальной дозы на всю SIG в целом
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TimingAndDurationBlock">
+        <xs:annotation>
+          <xs:documentation />
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MultipleTimingModifier" type="sch0:ANDOR">
+            <xs:annotation>
+              <xs:documentation>Мультипликатор для TimingAndDuration внутри
+                        одной инструкции
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TimingAndDuration" type="sch0:TimingAndDuration">
+            <xs:annotation>
+              <xs:documentation>Инструкции по указанию
+                        графика/частоты/продолжительности приема
+                        ЛП
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Instruction">
+        <xs:annotation>
+          <xs:documentation>Структурированная инструкция по дозировке и приему
+                ЛП.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element name="InstructionIndicator" type="sch0:InstructionIndicator">
+              <xs:annotation>
+                <xs:documentation>Альтернатива блоку AdministrationIndicator +
+                            (DoseAdministration + TimingAndDuration) Зачем: Для фиксации
+                            полу-структурированной Sig без DoseAdministration и Dosage, но с
+                            TimingAndDuration
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="IndicatorTimingAndDuration" type="sch0:TimingAndDurationBlock">
+              <xs:annotation />
+            </xs:element>
+          </xs:sequence>
+          <xs:sequence>
+            <xs:choice>
+              <xs:element name="AdministrationIndicator" type="sch0:AdministrationIndicator">
+                <xs:annotation>
+                  <xs:documentation>Спец указание для одной инструкции Например "в
+                                соответсвии с инструкцией производителя" (Только для безрецептурных
+                                ЛП). Альтернатива блоку InstructionIndicator + (DoseAdministration +
+                                TimingAndDuration)
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:sequence>
+                <xs:element name="DoseAdministration" type="sch0:DoseAdministration">
+                  <xs:annotation>
+                    <xs:documentation>Дозировка и способ приема дозы</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="TimingAndDuration" type="sch0:TimingAndDuration">
+                  <xs:annotation>
+                    <xs:documentation>Инструкции по указанию
+                                    графика/частоты/продолжительности приема ЛП
+                                </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:sequence minOccurs="0" maxOccurs="49">
+                  <xs:element name="AdditionalTimingAndDuration" type="sch0:TimingAndDurationBlock">
+                    <xs:annotation>
+                      <xs:documentation>Мультипликатор для TimingAndDuration внутри
+                                        одной инструкции
+                                    </xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:sequence>
+            </xs:choice>
+            <xs:sequence minOccurs="0">
+              <xs:element maxOccurs="50" name="IndicationForUse" type="sch0:Indication">
+                <xs:annotation>
+                  <xs:documentation>Показания к применению (Условия для начала
+                                использования) лекарственного средства ( для передачи пациенту ),
+                                Могут отличаться от клинических показаний к применению. Например,
+                                принимать для улучшения сна, хотя диагноз может бессонница.
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="IndicationClarifyingFreeText" type="sch0:an1..255">
+                <xs:annotation>
+                  <xs:documentation>Условия для начала использованию лекарственного
+                                средства (свободным текстом)
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="50" name="MaximumDoseRestriction" type="sch0:MaximumDoseRestriction">
+              <xs:annotation>
+                <xs:documentation>Ограничение максимальной дозы на одну инструкцию
+                            Определяет максимальный или дозовый предел, как указано назначающим
+                            врачом...
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="Dosage">
+        <xs:sequence>
+          <xs:element name="DoseQuantity" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Количество единиц разовой дозы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DoseUnitOfMeasure" type="sch0:DoseUnitOfMeasureCode">
+            <xs:annotation>
+              <xs:documentation>Единицы измерения разовой дозы Справочник</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="DoseRangeModifier" type="sch0:TOOR">
+              <xs:annotation>
+                <xs:documentation>Мультипликатор дозы препарата</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalDoseQuantity" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Количество единиц разовой дозы</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalDoseUnitOfMeasure" type="sch0:DoseUnitOfMeasureCode">
+              <xs:annotation>
+                <xs:documentation>Единицы измерения разовой дозы
+                            Справочник
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="BodyMetricQualifier">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="1|2" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="DoseCalculation">
+        <xs:annotation>
+          <xs:documentation>Расчет дозы, альтернатива DOSAGE</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="DosingBasisNumeric" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Число базовых единиц дозы для рассчета</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="DosingBasisRangeModifier" type="sch0:TOOR">
+              <xs:annotation>
+                <xs:documentation>Мультипликатор количества базовых единиц дозы Справочник
+                            TOOR
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalDosingBasisNumeric" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Число базовых единиц дозы для рассчета</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="DosingBasisUnitOfMeasure" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения базовой единицы дозы Справочник
+                        DosingBasisUnitOfMeasure Например, мг/кг
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element minOccurs="0" name="BodyMetricQualifier" type="sch0:BodyMetricQualifier">
+              <xs:annotation>
+                <xs:documentation>Название метрики тела учавствующей в расчете Например, вес
+                            в кг , площадь поверхности тела
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="BodyMetricValue" type="sch0:n1..18">
+              <xs:annotation>
+                <xs:documentation>Числовое значениеметрики тела для рассчета
+                            дозы
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:sequence minOccurs="0">
+            <xs:element name="CalculatedDoseNumeric" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Рассчитанное значение дозы исходя из базовой единицы и
+                            значения метрики тела = DosingBasisNumeric * BodyMetricValue
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="CalculatedDoseUnitOfMeasure" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Единица измерения рассчитаной дозы При расчете
+                            используется RateOfAdministration.TimePeriodBasis (например, день)
+                            Справочник CalculatedDoseUnitOfMeasure Например,
+                            мг/день
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element minOccurs="0" name="DoseCalculationClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Разъясняющий комментарий к расчету дозы в виде свободного
+                        текста
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DoseUnitOfMeasure" type="sch0:DoseUnitOfMeasureCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения рассчитанной (фармацевтом) дозы например,
+                        Таблетки Справочник DoseUnitOfMeasure
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DoseAdministration">
+        <xs:annotation />
+        <xs:sequence>
+          <xs:sequence minOccurs="0">
+            <xs:element name="DoseDeliveryMethod" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Метод принятия ЛП Справочник DoseDeliveryMethod Примеры :
+                            принять, нанести, проглотить, сделать иньекцию, прожевать и
+                            т.д
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="DoseDeliveryMethodModifier" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Для уточнения способа доставки дозы Например: экономно,
+                            часто, многократно, мягко, слегка, Применяется совместно с
+                            Vehicle
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:choice minOccurs="0">
+            <xs:element minOccurs="0" name="Dosage" type="sch0:Dosage">
+              <xs:annotation>
+                <xs:documentation>Доза препарата на разовый прием</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="DoseCalculation" type="sch0:DoseCalculation">
+              <xs:annotation>
+                <xs:documentation>Расчет дозы, альтернатива DOSAGE</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0">
+              <xs:element minOccurs="0" name="DoseAmount" type="sch0:SigCode">
+                <xs:annotation>
+                  <xs:documentation>Размер дозы "нечеткий" вариант: с горошину, на глазок,
+                                тонкая полоска и т.д. Альтернатива Dosage, DoseCalculation
+                                Справочник DoseAmount
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element minOccurs="0" name="DoseClarifyingFreeText" type="sch0:an1..255">
+                <xs:annotation>
+                  <xs:documentation>Уточняющий комментарий для DoseAmount в виде
+                                свободного текста
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:choice>
+          <xs:element minOccurs="0" name="Vehicle" type="sch0:Vehicle">
+            <xs:annotation>
+              <xs:documentation>Носитель лекарственного препарата (расворитель) Средство
+                        доставки дозы в организм пациента. При этом данное средство доставки не
+                        является частью зарегистрированной комбинации с ЛП. Например, вода для
+                        инъекций, лидокаин Поместите 17 г (1 столовую ложку) в напиток по выбору и
+                        выпейте перед сном
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RouteOfAdministration" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Путь доставки ЛП Справочник RouteOfAdministration
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RouteOfAdministrationClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Дополнительный комментарий к описанию путей
+                        доставки
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="SiteOfAdministration" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Место применения (часть тела)
+                            Справочник
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="SiteOfAdministrationClarifyingFreeText" type="sch0:an1..255">
+              <xs:annotation>
+                <xs:documentation>Дополнительный комментарий к описанию места применения
+                            (часть тела)
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="IntervalTiming">
+        <xs:sequence>
+          <xs:element name="IntervalNumericValue" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Числовое значение интервала</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="VariableIntervalModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Мультипликатор IntervalNumericValue Справочник
+                            ANDORTO
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalIntervalNumericValue" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Числовое значение интервала</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="IntervalUnits" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения интервала приема Справочник Единиц измерения
+                        времени
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Vehicle">
+        <xs:sequence>
+          <xs:element name="VehiclePreposition" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Типовая процедура предварительной подготовки Носителя ЛП
+                        (растворителя и т.д.) Справочник VehiclePreposition
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="VehicleQuantity" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Количество Носителя лекарственного препарата (расворителя),
+                        требуемое для 1 разовой дозы
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="MultipleVehicleModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Мультипликатор количества растворителя для одной дозы
+                            Справочник ANDORTO
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalVehicleQuantity" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Количество Носителя лекарственного препарата
+                            (расворителя), требуемое для 1 разовой дозы
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="VehicleUnitOfMeasure" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения для указанного количества Носителя
+                        ЛП
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Vehicle" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Наименование носителя ЛП (растворителя) Справочник
+                        Vehicle
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="VehicleClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Дополнительные комментарии по носителю ЛП (растворителю) в
+                        виде свободного текста
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="InstructionIndicator">
+        <xs:annotation>
+          <xs:documentation>альтернатива блоку AdministrationIndicator + (DoseAdministration + TimingAndDuration)
+                Для фиксации полу-структурированной Sig без DoseAdministration и Dosage, но с TimingAndDuration
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="MEDICALENCOUNTER">
+            <xs:annotation>
+              <xs:documentation>В соответствии со сделанным назначением</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="AdministrationIndicator">
+        <xs:annotation>
+          <xs:documentation>Спец указание для одной инструкции. Например "в соответсвии с инструкцией производителя"
+                (Только для безрецептурных ЛП)
+                Альтернатива блоку InstructionIndicator + (DoseAdministration + TimingAndDuration)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="MANUFACTURERSINSTRUCTIONS">
+            <xs:annotation>
+              <xs:documentation>В соответствии с инструкцией производителя</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="MaximumDoseRestriction">
+        <xs:annotation />
+        <xs:sequence>
+          <xs:element name="MaximumDoseRestrictionNumericValue" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Числовое значение максимальной дозы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:choice>
+            <xs:element name="MaximumDoseRestrictionForm" type="sch0:DoseUnitOfMeasureCode">
+              <xs:annotation>
+                <xs:documentation>Форма максимальной дозы Справочник единиц измерения дозы
+                            DoseUnitOfMeasure
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="MaximumDoseRestrictionUnits" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Единица измерения максимальной дозы</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+          <xs:element name="MaximumDoseRestrictionDurationValue" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Ограничение периода действия максимальной дозы, числовое
+                        значение
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="MaximumDoseRestrictionDurationUnit" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Ограничение периода действия максимальной дозы, единица
+                        измерения
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MaximumDoseRestrictionClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Уточнение Ограничения максимальной дозы (свободным
+                        текстом)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DoseUnitOfMeasureCode">
+        <xs:annotation>
+          <xs:documentation>Значение справочника: Code - код Text - текстовое значение Qualifier -
+                уточнее, свободные текст??? Справочник Единиц измерения разовой дозы а также
+                Справочник Форм значения максимальной дозы
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Text" type="sch0:an" />
+          <xs:element name="Qualifier" type="sch0:SigUnitOfMeasure" />
+          <xs:element name="Code" type="sch0:Code" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TimingAndDuration">
+        <xs:choice>
+          <xs:sequence>
+            <xs:choice>
+              <xs:element name="AdministrationTiming" type="sch0:AdministrationTiming">
+                <xs:annotation>
+                  <xs:documentation>Указание схемы приема ЛП основываясь на событии (обед,
+                                перед сном, и т.п. )
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Frequency" type="sch0:FrequencyTiming">
+                <xs:annotation>
+                  <xs:documentation>Указание схемы приема ЛП по частоте (кратность приема)
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Interval" type="sch0:IntervalTiming">
+                <xs:annotation>
+                  <xs:documentation>Указание схемы приема ЛП по
+                                интервалу
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="RateOfAdministration" type="sch0:RateOfAdministration">
+                <xs:annotation>
+                  <xs:documentation>Буквально «Темп введения одной дозы» (секунд, минут,
+                                часов, дней). 1 раз в час в расчете на день
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+            <xs:element minOccurs="0" name="TimingClarifyingFreeText" type="sch0:an1..255">
+              <xs:annotation>
+                <xs:documentation>Инструкции по указанию графика/частоты/продолжительности
+                            приема ЛП свободным текстом
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="Duration" type="sch0:Duration">
+            <xs:annotation>
+              <xs:documentation>Продолжительность применения "атомарной единицы" схемы
+                        приема
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DurationTrigger" type="sch0:DurationTriggerTiming">
+            <xs:annotation>
+              <xs:documentation>Событие для продолжения (или прекращения?) применения "атомарной единицы" схемы
+                        приема Например: пока симптомы не исчезнут, если симптомы не ухудшатся, до
+                        возвращения из поездки, если не появятся новые симптомы, если
+                        головокружение, если появляются побочные эффекты.
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="StopIndicator" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Событие для прекращения применения "атомарной единицы" схемы
+                        приема (Максимальный срок приема, после которого необходимо прекратить
+                        прием) Справочник StopIndicator
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:complexType name="Duration">
+        <xs:sequence>
+          <xs:element name="DurationNumericValue" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Числовое значение Продолжительности применения "атомарной
+                        единицы" схемы приема
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DurationText" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения Продолжительности применения "атомарной
+                        единицы" схемы приема Справочник Единиц измерения времени
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DurationTriggerTiming">
+        <xs:sequence>
+          <xs:element name="Trigger" type="sch0:SigCode" />
+          <xs:element minOccurs="0" name="DurationClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Событие для прекращения применения атомарной единицы схемы
+                        приема в виде свободного текста
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RateOfAdministration">
+        <xs:sequence>
+          <xs:element name="RateOfAdministration" type="sch0:an1..11">
+            <xs:annotation>
+              <xs:documentation>Значение Темпа введения одной дозы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="RateUnitOfMeasure" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения количества времени для введения одной
+                        дозы
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TimePeriodBasis" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Базовая единица временного периода для измерения Справочник
+                        Единиц измерения времени Показатель необходим для расчета DoseCalculation
+                        (CalculatedDoseUnitOfMeasure) как значение времени == 1 сутки Например,
+                        базовая единица дозы для измерения мг/кг, рассчитанная в течение 24-часового
+                        периода времени, будет иметь окончательное представление мг/кг/день
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FrequencyTiming">
+        <xs:sequence>
+          <xs:element name="FrequencyNumericValue" type="sch0:n">
+            <xs:annotation>
+              <xs:documentation>Числовое значение частоты приема за единицу
+                        времени
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="VariableFrequencyModifier" type="sch0:ANDORTO">
+              <xs:annotation>
+                <xs:documentation>Мультипликатор FrequencyNumericValue</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="AdditionalFrequencyNumericValue" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Числовое значение частоты приема за единицу времени
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="FrequencyUnits" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения единицы времени частоты приема Справочник
+                        Единиц измерения времени
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="AdministrationTiming">
+        <xs:sequence>
+          <xs:sequence minOccurs="0">
+            <xs:element name="AdministrationTimingNumericValue" type="sch0:n">
+              <xs:annotation>
+                <xs:documentation>Числовое значение сдвига события по приему
+                            ЛП
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0">
+              <xs:element name="VariableAdministrationTimingModifier" type="sch0:ANDORTO">
+                <xs:annotation>
+                  <xs:documentation>Мультипликатор числового значения
+                                сдвига
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="AdditionalAdministrationTimingNumericValue" type="sch0:n">
+                <xs:annotation>
+                  <xs:documentation>Числовое значение сдвига события по приему
+                                ЛП
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element name="AdministrationTimingUnits" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Единица измерения сдвигов события по приему
+                            ЛП
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:element minOccurs="0" name="AdministrationTimingModifier" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Модификатор события сдвига Справочник До/после/ во время/ в
+                        начале
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AdministrationTimingEvent" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Событие, при наступлении которого необходимо принять
+                        ЛП
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AdministrationTimingClarifyingFreeText" type="sch0:an1..255">
+            <xs:annotation>
+              <xs:documentation>Дополнительное текстовое описание события для приема ЛП (на
+                        голодный желудок)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Indication">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IndicationPrecursor" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Предисловие причины Например: для, когда, если Справочник
+                        IndicationPrecursor
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Indication" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Контроллируемый индикатор показателя IndicationForUse
+                        Например, кровяное давление, уровень глюкозы в крови...
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:sequence minOccurs="0">
+            <xs:element name="IndicationValue" type="sch0:SigCode">
+              <xs:annotation>
+                <xs:documentation>Тип сравнения значения условия применения (1я часть)
+                            например: больше чем, меньше чем, равно...
+                        </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0">
+              <xs:element name="IndicationVariableModifier" type="sch0:ANDORTO">
+                <xs:annotation>
+                  <xs:documentation>Мультипликатор IndicationValue</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="AdditionalIndicationValue" type="sch0:SigCode">
+                <xs:annotation>
+                  <xs:documentation>Тип сравнения значения условия применения (2я часть)
+                                например: больше чем, меньше чем, равно... Справочник
+                                IndicationValue Для 2й части Обязательно заполнение
+                                IndicationVariableModifier
+                            </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:sequence>
+          <xs:element minOccurs="0" name="IndicationValueUnit" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Числовое значение (текстом) контроллируемого показателя,
+                        взятое из справочника "норм" например 150 (мм рт ст)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IndicationValueUnitOfMeasure" type="sch0:SigCode">
+            <xs:annotation>
+              <xs:documentation>Единица измерения для числового значения контроллируемого
+                        показателя (из справочника "норм") например мм рт ст
+                        (150)
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="SigUnitOfMeasure">
+        <xs:annotation>
+          <xs:documentation>Справочник Единиц измерения разовой дозы а также Справочник Форм
+                значения максимальной дозы
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="DoseUnitOfMeasure" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="PrescriptionStatus">
+        <xs:annotation>
+          <xs:documentation>Коды статусов назначения</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="Active">
+            <xs:annotation>
+              <xs:documentation>Активно</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Canceled">
+            <xs:annotation>
+              <xs:documentation>Отменено</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Inactive">
+            <xs:annotation>
+              <xs:documentation>Неактивно</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="RxPrescriptionStatus">
+        <xs:annotation>
+          <xs:documentation>Коды статусов рецепта</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="Created">
+            <xs:annotation>
+              <xs:documentation>Сформирован</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Dispensed">
+            <xs:annotation>
+              <xs:documentation>Отпущен</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PartiallyDispensed">
+            <xs:annotation>
+              <xs:documentation>Частино отпущен</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RxCanceled">
+            <xs:annotation>
+              <xs:documentation>Отменен</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RxInvalid">
+            <xs:annotation>
+              <xs:documentation>Недействителен</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PreOrdered">
+            <xs:annotation>
+              <xs:documentation>Предварительный заказ</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DelayedService">
+            <xs:annotation>
+              <xs:documentation>Отложенное обслуживание</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="Pharmacy">
+        <xs:annotation>
+          <xs:documentation>Аптека</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Identification" type="sch0:PharmacyID">
+            <xs:annotation>
+              <xs:documentation>Идентификаторы Аптеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Pharmacist" type="sch0:Pharmacist">
+            <xs:annotation>
+              <xs:documentation>Фармацевт</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BusinessName" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Наименование аптеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Licence" type="sch0:Licence" />
+          <xs:element minOccurs="0" name="Address" type="sch0:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес аптеки</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MandatoryAddressPharmacy">
+        <xs:complexContent mixed="false">
+          <xs:extension base="sch0:AddressType" />
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:simpleType name="RxTypes">
+        <xs:annotation>
+          <xs:documentation>Виды рецептов</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="rx107unp">
+            <xs:annotation>
+              <xs:documentation>107/у-НП</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx1481u88">
+            <xs:annotation>
+              <xs:documentation>148-1/у-88</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx1071u">
+            <xs:annotation>
+              <xs:documentation>107-1/у</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx1481u06">
+            <xs:annotation>
+              <xs:documentation>148-1/у-06</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx1481u04">
+            <xs:annotation>
+              <xs:documentation>148-1/у-04</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx1MI">
+            <xs:annotation>
+              <xs:documentation>форма №1-МИ</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx2MI">
+            <xs:annotation>
+              <xs:documentation>форма №2-МИ</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="rx3MI">
+            <xs:annotation>
+              <xs:documentation>форма №3-МИ</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="Licence">
+        <xs:sequence>
+          <xs:element name="LicenceNumber" type="sch0:an1..50">
+            <xs:annotation>
+              <xs:documentation>Номер лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LicenceStartDate" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата начала действия лицензии</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LicenceEndDate" type="sch0:SimpleDateType" />
+          <xs:element name="LicenceAdministrator" type="sch0:an1..1000">
+            <xs:annotation>
+              <xs:documentation>Лицензирующий орган</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RxOrganizationType">
+        <xs:annotation>
+          <xs:documentation>Мед организация</xs:documentation>
+        </xs:annotation>
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="RxPrescriberType">
+        <xs:annotation>
+          <xs:documentation>Медицинский работник</xs:documentation>
+        </xs:annotation>
+      </xs:complexType>
+      <xs:complexType name="RxPatientType">
+        <xs:annotation>
+          <xs:documentation>Тип = Пациент для рецепта</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="Name" type="sch0:NameType" />
+          <xs:element minOccurs="0" name="Identification" type="sch0:PatientIDForMO">
+            <xs:annotation>
+              <xs:documentation>Идентификатор пациента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Address" type="sch0:AddressType">
+            <xs:annotation>
+              <xs:documentation>Адрес пациента</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CommunicationNumbers" type="sch0:CommunicationNumbersType">
+            <xs:annotation>
+              <xs:documentation>Контактные данные</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Benefits" type="sch0:BenefitType">
+            <xs:annotation>
+              <xs:documentation>Льготный профиль</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChildFlag" type="sch0:BooleanCode">
+            <xs:annotation>
+              <xs:documentation>Признак - ребенок</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DateOfBirth" type="sch0:SimpleDateType">
+            <xs:annotation>
+              <xs:documentation>Дата рождения</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AgeYears" type="sch0:n1..3">
+            <xs:annotation>
+              <xs:documentation>Возраст, лет</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="AgeMonth" type="sch0:n1..2">
+            <xs:annotation>
+              <xs:documentation>Возраст, мес</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BenefitType">
+        <xs:sequence>
+          <xs:element name="BenefitGroup" type="sch0:an1..10">
+            <xs:annotation>
+              <xs:documentation>Код льготной категории</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="FinanceSource" type="sch0:FinanceSourcesType">
+            <xs:annotation>
+              <xs:documentation>Источник финансирования</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BenefitPercent" type="sch0:n1..3">
+            <xs:annotation>
+              <xs:documentation>% оплаты льготы</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="FinanceSourcesType">
+        <xs:annotation>
+          <xs:documentation>Источник финансирования</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="1">
+            <xs:annotation>
+              <xs:documentation>Федеральный бюджет</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="2">
+            <xs:annotation>
+              <xs:documentation>Бюджет субъекта РФ</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="3">
+            <xs:annotation>
+              <xs:documentation>Муниципальный бюджет</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="PriorAuthorizationType">
+        <xs:annotation>
+          <xs:documentation>признак срочности отпуска для случая отсроченного обслуживания Будет
+                учитываться в случае, если при обращении в аптеку данного ЛП не оказалось, тогда
+                рецепт принимается на отсроченное обслуживание
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="cito">
+            <xs:annotation>
+              <xs:documentation>с пометкой cito - обслуживается в течение 2х рабочих дней со
+                        дня обращения в аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="statim">
+            <xs:annotation>
+              <xs:documentation>обслуживается в течение 1го рабочего дня со дня обращения в
+                        аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="5">
+            <xs:annotation>
+              <xs:documentation>обслуживается в течение 5ти рабочих дней со дня обращения в
+                        аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="10">
+            <xs:annotation>
+              <xs:documentation>обслуживается в течение 10ти рабочих дней со дня обращения в
+                        аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="15">
+            <xs:annotation>
+              <xs:documentation>обслуживается в течение 15ти рабочих дней со дня обращения в
+                        аптеку
+                    </xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ANDOR">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="AND|OR" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ANDORNOT">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="AND|OR|NOT" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ANDORTHEN">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="AND|OR|THEN" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ANDORTHENNOT">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="AND|OR|THEN|NOT" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ANDORTO">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="AND|OR|TO" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="TOOR">
+        <xs:annotation>
+          <xs:documentation>Мультипликатор параметров</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="TO|OR" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="([!-~®™А-яЁё«№»]|[ ])*[!-~®™А-яЁё«№»]([!-~®™А-яЁё«№»]|[ ])*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..10">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="10" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..100">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="100" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..1000">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="1000" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..105">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="105" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..11">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="11" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..14">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="14" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..140">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="140" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..15">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="15" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..17">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="17" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..19">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="19" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..2">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="2" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..2000">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="2000" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..210">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="210" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..25">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="25" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..254">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="254" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..255">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="255" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..260">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="260" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..500">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="500" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..3">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="3" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..35">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="35" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..4">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="4" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..40">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="40" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..50">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="50" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..6">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="6" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..70">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="70" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..8">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="8" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..80">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="80" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an1..9">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="9" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:pattern value="[0-9]+(\.[0-9]+)?" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..1">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="1" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..10">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="10" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..11">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="11" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..14">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="14" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..15">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="15" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..18">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="18" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..2">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="2" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..3">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="3" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..4">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="4" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..5">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="1" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n1..8">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:n">
+          <xs:maxLength value="8" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="n2">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:maxLength value="2" />
+          <xs:pattern value="[0-9][0-9]" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="sn">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:pattern value="-?[0-9]+(\.[0-9]+)?" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="sn1..18">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:sn">
+          <xs:maxLength value="18" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="DateRange">
+        <xs:sequence>
+          <xs:element name="StartDate" type="sch0:DateType" />
+          <xs:element name="EndDate" type="sch0:DateType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DateType">
+        <xs:choice>
+          <xs:element name="Date" type="sch0:SimpleDateType" />
+          <xs:element name="DateTime" type="sch0:UtcDateType" />
+        </xs:choice>
+      </xs:complexType>
+      <xs:simpleType name="an13..15">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:pattern value="(\d{13})|(\d{15})" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="an8..10">
+        <xs:annotation>
+          <xs:documentation>Базовый тип ограничений Medicata</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="sch0:an">
+          <xs:pattern value="(\d{8})|(\d{10})" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="Code">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="([!-~А-Яа-я]|[ ])*[!-~А-Яа-я]([!-~]|[ ])*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="SimpleDateType">
+        <xs:restriction base="xs:date" />
+      </xs:simpleType>
+      <xs:simpleType name="UtcDateType">
+        <xs:restriction base="xs:dateTime" />
+      </xs:simpleType>
+      <xs:simpleType name="ZipCodeType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="(\d{5})|(\d{9})" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="BooleanCode">
+        <xs:restriction base="sch0:Code">
+          <xs:enumeration value="Y">
+            <xs:annotation>
+              <xs:documentation>Yes</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="N">
+            <xs:annotation>
+              <xs:documentation>No</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="BaseBinaryType">
+        <xs:restriction base="xs:base64Binary" />
+      </xs:simpleType>
+    </xs:schema>
+    <xsd:schema xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:simpleType name="tTimestampFault">
+        <xsd:annotation>
+          <xsd:documentation>
+This type defines the fault code value for Timestamp message expiration.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:QName">
+          <xsd:enumeration value="wsu:MessageExpired" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:attribute name="Id" type="xsd:ID">
+        <xsd:annotation>
+          <xsd:documentation>
+This global attribute supports annotating arbitrary elements with an ID.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attributeGroup name="commonAtts">
+        <xsd:annotation>
+          <xsd:documentation>
+Convenience attribute group used to simplify this schema.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute ref="wsu:Id" use="optional" />
+        <xsd:anyAttribute namespace="##other" processContents="lax" />
+      </xsd:attributeGroup>
+      <xsd:complexType name="AttributedDateTime">
+        <xsd:annotation>
+          <xsd:documentation>
+This type is for elements whose [children] is a psuedo-dateTime and can have arbitrary attributes. 
+      </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attributeGroup ref="wsu:commonAtts" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="AttributedURI">
+        <xsd:annotation>
+          <xsd:documentation>
+This type is for elements whose [children] is an anyURI and can have arbitrary attributes.
+      </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:anyURI">
+            <xsd:attributeGroup ref="wsu:commonAtts" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="TimestampType">
+        <xsd:annotation>
+          <xsd:documentation>
+This complex type ties together the timestamp related elements into a composite type.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element minOccurs="0" ref="wsu:Created" />
+          <xsd:element minOccurs="0" ref="wsu:Expires" />
+          <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:any namespace="##other" processContents="lax" />
+          </xsd:choice>
+        </xsd:sequence>
+        <xsd:attributeGroup ref="wsu:commonAtts" />
+      </xsd:complexType>
+      <xsd:element name="Timestamp" type="wsu:TimestampType">
+        <xsd:annotation>
+          <xsd:documentation>
+This element allows Timestamps to be applied anywhere element wildcards are present,
+including as a SOAP header.
+            </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Expires" type="wsu:AttributedDateTime">
+        <xsd:annotation>
+          <xsd:documentation>
+This element allows an expiration time to be applied anywhere element wildcards are present.
+            </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Created" type="wsu:AttributedDateTime">
+        <xsd:annotation>
+          <xsd:documentation>
+This element allows a creation time to be applied anywhere element wildcards are present.
+            </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="CancelRxResponse">
+    <wsdl:part name="CancelRxResponse" element="sch0:CancelRxResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewRxRequest">
+    <wsdl:part name="NewRxRequest" element="sch0:NewRxRequest" />
+  </wsdl:message>
+  <wsdl:message name="RxHistoryRequest">
+    <wsdl:part name="RxHistoryRequest" element="sch0:RxHistoryRequest" />
+  </wsdl:message>
+  <wsdl:message name="MOHealthCheckResponse">
+    <wsdl:part name="MOHealthCheckResponse" element="sch0:MOHealthCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="RxHistoryResponse">
+    <wsdl:part name="RxHistoryResponse" element="sch0:RxHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelRxRequest">
+    <wsdl:part name="CancelRxRequest" element="sch0:CancelRxRequest" />
+  </wsdl:message>
+  <wsdl:message name="MOHealthCheckRequest">
+    <wsdl:part name="MOHealthCheckRequest" element="sch0:MOHealthCheckRequest" />
+  </wsdl:message>
+  <wsdl:message name="NewRxResponse">
+    <wsdl:part name="NewRxResponse" element="sch0:NewRxResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MedicataMOV2Port">
+    <wsdl:operation name="CancelRx">
+      <wsdl:input name="CancelRxRequest" message="sch0:CancelRxRequest" />
+      <wsdl:output name="CancelRxResponse" message="sch0:CancelRxResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="NewRx">
+      <wsdl:input name="NewRxRequest" message="sch0:NewRxRequest" />
+      <wsdl:output name="NewRxResponse" message="sch0:NewRxResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="RxHistory">
+      <wsdl:input name="RxHistoryRequest" message="sch0:RxHistoryRequest" />
+      <wsdl:output name="RxHistoryResponse" message="sch0:RxHistoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="MOHealthCheck">
+      <wsdl:input name="MOHealthCheckRequest" message="sch0:MOHealthCheckRequest" />
+      <wsdl:output name="MOHealthCheckResponse" message="sch0:MOHealthCheckResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MedicataMOV2PortSoap11" type="sch0:MedicataMOV2Port">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CancelRx">
+      <soap:operation soapAction="" />
+      <wsdl:input name="CancelRxRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CancelRxResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewRx">
+      <soap:operation soapAction="" />
+      <wsdl:input name="NewRxRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="NewRxResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RxHistory">
+      <soap:operation soapAction="" />
+      <wsdl:input name="RxHistoryRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="RxHistoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MOHealthCheck">
+      <soap:operation soapAction="" />
+      <wsdl:input name="MOHealthCheckRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="MOHealthCheckResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MedicataMOV2PortService">
+    <wsdl:port name="MedicataMOV2PortSoap11" binding="sch0:MedicataMOV2PortSoap11">
+      <soap:address location="https://api.medicata.dev/ws/mo/v2" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

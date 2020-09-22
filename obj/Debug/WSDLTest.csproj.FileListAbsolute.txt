@@ -1,0 +1,14 @@
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\bin\Debug\WSDLTest.exe.config
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\bin\Debug\WSDLTest.exe
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\bin\Debug\WSDLTest.pdb
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\obj\Debug\WSDLTest.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\obj\Debug\WSDLTest.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\obj\Debug\WSDLTest.exe
+C:\Users\Admin\source\repos\WSDLTest\WSDLTest\obj\Debug\WSDLTest.pdb
+E:\Срочно\WSDLTest-master\WSDLTest-master\bin\Debug\WSDLTest.exe.config
+E:\Срочно\WSDLTest-master\WSDLTest-master\bin\Debug\WSDLTest.exe
+E:\Срочно\WSDLTest-master\WSDLTest-master\bin\Debug\WSDLTest.pdb
+E:\Срочно\WSDLTest-master\WSDLTest-master\obj\Debug\WSDLTest.csprojAssemblyReference.cache
+E:\Срочно\WSDLTest-master\WSDLTest-master\obj\Debug\WSDLTest.csproj.CoreCompileInputs.cache
+E:\Срочно\WSDLTest-master\WSDLTest-master\obj\Debug\WSDLTest.exe
+E:\Срочно\WSDLTest-master\WSDLTest-master\obj\Debug\WSDLTest.pdb

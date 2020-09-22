@@ -133,7 +133,7 @@ namespace WSDLTest
                         {
                             Items = new object[]
                             {
-                                new DrugProductCodeWithText()
+                                new ProductCode()
                                 {
                                     Code ="GD000449",
                                     Qualifier = AllergyDrugProductCodedQualifier.GenericDrug,
@@ -261,12 +261,12 @@ namespace WSDLTest
         }
     }
 
-    //public class DrugProductCodeWithText
-    //{ 
-    //    public string Code { get; set; }
-    //    public string Qualifier { get; set; }
-    //    public string Text { get; set; }
-    //}
-    
+    public class ProductCode 
+    {
+        public string Code { get; set; }
+        public AllergyDrugProductCodedQualifier Qualifier { get; set; }
+        public string Text { get; set; }
+    }
+
 }
 
